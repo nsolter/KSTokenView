@@ -567,6 +567,15 @@ open class KSTokenView: UIView {
       delegate?.tokenView?(self, didAddToken: addedToken!)
       return addedToken
    }
+    
+    public func addTokenNoCallbacks(_ token: KSToken) -> KSToken? {
+        if (!_canAddMoreToken()) {
+            return nil
+        }
+        
+        return (_tokenField.addToken(token))
+    }
+    
    
    
    //MARK: - Delete Token
@@ -582,6 +591,11 @@ open class KSTokenView: UIView {
       _removeToken(token)
    }
    
+    public func deleteTokenNoCallbacks(_ token: KSToken) {
+        if token.sticky {return}
+        _tokenField.removeToken(token, removingAll: false)
+    }
+    
    /**
    Searches for KSToken object and deletes
    
